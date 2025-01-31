@@ -61,7 +61,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
     setError(null)
 
     try {
-      let imageObj =  { id: product.image.id, url: product.image.url } 
+      // let imageObj =  { id: product.image.id, url: product.image.url } 
+      let imageObj = product?.image ? { id: product.image.id, url: product.image.url } : null;
+
       // let imageObj =  { id: product.image.id, url: product.image.url } ;
 
       if (formData.image) {
