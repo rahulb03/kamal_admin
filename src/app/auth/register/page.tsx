@@ -26,7 +26,7 @@ export default function RegisterPage() {
     try {
       const response = await register(username, email, password);
       setAuth(response.user, response.jwt);
-      router.push('/dashboard');
+      router.push('/auth/login');
     } catch (error) {
       toast({
         title: 'Error',

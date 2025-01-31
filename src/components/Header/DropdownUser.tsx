@@ -27,7 +27,7 @@ const DropdownUser = () => {
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <Link
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex items-center gap-4 z-10" 
+        className="flex items-center gap-4 z-1000" 
         href="#"
       >
         <span className="h-12 w-12 rounded-full">

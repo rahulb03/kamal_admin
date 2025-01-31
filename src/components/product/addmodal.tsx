@@ -8,6 +8,7 @@ import { STRAPI_URL } from "@/config/constant"
 import { useImageUpload } from "@/hooks/useimageupload"
 import Image from 'next/image';
 import { Category } from "@/types/category"
+import { useCategoryContext } from "@/lib/context/category-context"
 
 
 interface FormData {
@@ -25,6 +26,7 @@ interface ProductFormProps {
 
 const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
   const { products,  addProduct, editProduct } = useProductContext()
+  const {categories} = useCategoryContext();
   const { uploadImage, deleteImage, uploadError } = useImageUpload()
   const isEditing = !!product
 
@@ -36,7 +38,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
     image: null,
   })
  
-  const [categories, setCategories] = useState<Category[]>([])
+  // const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -131,9 +133,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose }) => {
 
           <select name="category" value={formData.category} onChange={handleChange} className="w-full mb-2 p-2 border">
             <option value="">Select Category</option>
-            {products.map((cat) => (
+            {categories.map((cat) => (
               <option key={cat.id} value={cat.id}>
-                {cat.category.name}
+                {cat.name}
               </option>
             ))}
           </select>

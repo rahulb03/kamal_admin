@@ -105,7 +105,7 @@ function StatCard({ title, value, icon, description, color, delay, isVisible }: 
     <div
       className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"} ${delay}`}
     >
-      <div className={`p-4 bg-gradient-to-r ${color}`}>
+      <div className={`p-4 bg-gradient-to-r ${color}`}> 
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-semibold text-white">{title}</h3>
           <div className="text-white opacity-80">{icon}</div>
