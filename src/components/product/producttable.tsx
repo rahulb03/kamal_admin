@@ -128,7 +128,7 @@ const ProductTable: React.FC = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {searchedProducts.map((product) => {
-              // const imageUrl = product.image?.url ? `${STRAPI_URL}${product.image.url}` : "/placeholder.svg";
+              const imageUrl = product.image?.url ? `${STRAPI_URL}${product.image.url}` : "/placeholder.svg";
               return (
                 <tr key={product.documentId} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -142,7 +142,7 @@ const ProductTable: React.FC = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                   
                   {/* {product.image?.length > 0 ? ( */}
-                    {product.image && product.image.length > 0 ? (
+                    {/* {product.image && product.image.length > 0 ? (
               <div className="flex space-x-4">
 
            { product.image.map((img) => (
@@ -167,9 +167,9 @@ const ProductTable: React.FC = () => {
               height={100}
               className="rounded-lg"
             />
-          )}
+          )} */}
 
-                    {/* <Image src={imageUrl || "/placeholder.svg"} alt={product.name} width={50} height={50} className="rounded-full" /> */}
+                    <Image src={imageUrl || "/placeholder.svg"} alt={product.name} width={50} height={50} className="rounded-full" />
 
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.id}</td>
