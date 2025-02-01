@@ -1,5 +1,11 @@
 
 
+export type ImageType = {
+  id: number;
+  url: string;
+};
+
+
 export type Product = {
   documentId: string;
   id: number;
@@ -8,10 +14,12 @@ export type Product = {
   stock: number;
   category: {
     name: string;
-    // id: string;
+    id: number;
   };
-  image: {
-    id: string;
-    url: string;
-  };
+  // image: {
+  //   id: string;
+  //   url: string;
+  // };
+  image?: ImageType[] ; // Handle both single object and array cases
+
 }

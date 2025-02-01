@@ -55,9 +55,9 @@ export default function EnhancedInventoryOverview() {
 
    
   return (
-    <div className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-2xl">
-      <h2 className="text-3xl font-bold text-white mb-8">Inventory Overview</h2>
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div className=" p-8  rounded-xl shadow-2xl">
+      <h2 className="text-3xl font-bold text-black mb-8">Inventory Overview</h2>
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 ">
         <StatCard
           title="Total Categories"
           value={data.totalCategories}
@@ -103,9 +103,10 @@ interface StatCardProps {
 function StatCard({ title, value, icon, description, color, delay, isVisible }: StatCardProps) {
   return (
     <div
-      className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"} ${delay}`}
+      // className={`bg-white z-0 rounded-lg shadow-lg overflow-hidden transform transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"} ${delay}`}
+      className={`bg-white  rounded-xl `}
     >
-      <div className={`p-4 bg-gradient-to-r ${color}`}> 
+      <div className={`p-4 bg-gradient-to-r rounded-t-xl ${color}`}> 
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-semibold text-white">{title}</h3>
           <div className="text-white opacity-80">{icon}</div>

@@ -1,10 +1,10 @@
-
-
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode'; // Ensure you have this package installed: npm install jwt-decode
+import { useRouter, usePathname } from 'next/navigation';
+import { jwtDecode } from 'jwt-decode';
 import { User } from '../services/auth';
+import Loader from '@/components/common/Loader';
 
 type AuthContextType = {
   user: User | null;
@@ -18,12 +18,15 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Validate token function
   const isTokenValid = (token: string): boolean => {
     try {
       const decoded: { exp?: number } = jwtDecode(token);
-      const currentTime = Date.now() / 1000; // Current time in seconds
+      const currentTime = Date.now() / 1000;
       return decoded.exp ? decoded.exp > currentTime : false;
     } catch {
       return false;
@@ -31,19 +34,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    // Check for stored user and token
     const storedUser = localStorage.getItem('user');
     const storedToken = localStorage.getItem('token');
 
     if (storedUser && storedToken && isTokenValid(storedToken)) {
       setUser(JSON.parse(storedUser));
       setToken(storedToken);
+      
+      // Redirect authenticated users away from login/register pages
+      if (pathname === '/auth/login' || pathname === '/auth/register') {
+        router.replace('/dashboard');
+      }
     } else {
-      // If token is invalid or missing, clear any existing session
       localStorage.removeItem('user');
       localStorage.removeItem('token');
+
+      // Redirect unauthorized users away from protected pages
+      if (!['/auth/login', '/auth/register'].includes(pathname)) {
+        router.replace('/auth/login');
+      }
     }
-  }, []);
+
+    setLoading(false);
+  }, [pathname]);
 
   const setAuth = (newUser: User | null, newToken: string | null) => {
     setUser(newUser);
@@ -52,6 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (newUser && newToken) {
       localStorage.setItem('user', JSON.stringify(newUser));
       localStorage.setItem('token', newToken);
+      router.replace('/dashboard');
     }
   };
 
@@ -60,7 +74,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setToken(null);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    router.replace('/auth/login');
   };
+
+  if (loading) {
+    return <Loader />
+
+  }
 
   return (
     <AuthContext.Provider value={{ user, token, setAuth, logout }}>
